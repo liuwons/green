@@ -1,0 +1,39 @@
+﻿#main_box section {
+  padding: 5em 0 10em; }
+  #main_box section p {
+    line-height: 1.75; }
+  #main_box section > div {
+    max-width: 50em;
+    margin: auto; }
+  #main_box section form .field > label {
+    width: 4.5em; }
+  #main_box section form input.text, #main_box section form input.password {
+    box-sizing: border-box;
+    width: 17.5em; }
+  #main_box section form button {
+    margin-right: 1em; }
+  #main_box section form .sbumit a {
+    color: #808080; }
+  @media (max-width: 599px) {
+    #main_box section {
+      background: #fff;
+      padding: 2em 0 8em; }
+      #main_box section > div {
+        box-shadow: 0 0 0 transparent; } }
+  #main_box section .op {
+    text-align: center;
+    margin-top: 2em; }
+    #main_box section .op a {
+      display: inline-block;
+      background: #ff5855;
+      color: #fff;
+      border: 0;
+      line-height: 1;
+      padding: 0.5em 3em;
+      font-size: 1.5em;
+      font-weight: 300; }
+      #main_box section .op a:hover, #main_box section .op a:active {
+        text-decoration: none;
+        color: #fff; }
+
+/*# sourceMappingURL=formpage.css.map */

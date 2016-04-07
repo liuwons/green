@@ -35,6 +35,13 @@ with open("conf.json") as f:
 wx_conf = WechatConf(token=wx_token, appid=wx_appid, appsecret=wx_secrert, encrypt_mode=wx_mode)
 wechat = WechatBasic(conf=wx_conf)
 
+with open("menu.json") as f:
+    menu_str = f.read()
+    js = json.loads(menu_str)
+    wechat.delete_menu()
+    wechat.create_menu(js)
+
+
 from handle import *
 
 handlers=[
@@ -43,4 +50,5 @@ handlers=[
 
         #static resource route
         (r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__), "static")}),
+        (r"/(.*\.html)", tornado.web.StaticFileHandler,{"path": "static/"}),
         ]

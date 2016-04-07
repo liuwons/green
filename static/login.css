@@ -1,0 +1,32 @@
+﻿#main_box section {
+  background: #f8f8f8;
+  padding: 5em 0 10em; }
+  #main_box section > div {
+    width: 20em;
+    margin: auto;
+    padding-left: 25em;
+    background-image: url(login.jpg);
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    background-size: 20em auto; }
+  #main_box section a {
+    margin-left: 0.25em; }
+  #main_box section form .field > label {
+    width: 3.5em; }
+  #main_box section form input.text, #main_box section form input.password {
+    width: 15.5em;
+    background: #fff; }
+  #main_box section form button {
+    margin-right: 1em; }
+  #main_box section form .sbumit a {
+    color: #808080; }
+  @media (max-width: 599px) {
+    #main_box section {
+      background: #fff;
+      padding: 4em 0 8em; }
+      #main_box section > div {
+        padding-left: 0;
+        background: none;
+        box-shadow: 0 0 0 transparent; } }
+
+/*# sourceMappingURL=login.css.map */

@@ -1,0 +1,59 @@
+{
+    "button":[
+        {
+            "name": "走进农场",
+            "sub_button": [
+                {
+                    "type": "view",
+                    "name": "农场简介",
+                    "url": "http://a.lwons.com/index.html"
+                },
+                {
+                    "type": "view",
+                    "name": "了解详情",
+                    "url": "http://a.lwons.com/know.html"
+                },
+                {
+                    "type": "view",
+                    "name": "农场日记",
+                    "url": "http://a.lwons.com/diary.html"
+                }
+            ]
+        },
+        {
+            "name": "加入我们",
+            "sub_button": [
+                {
+                    "type": "view",
+                    "name": "套餐订购",
+                    "url": "http://a.lwons.com/taocao.html"
+                },
+                {
+                    "type": "view",
+                    "name": "99元体验一周",
+                    "url": "http://a.lwons.com/feel.html"
+                }
+            ]
+        },
+        {
+            "name": "会员分享",
+            "sub_button": [
+                {
+                    "type": "view",
+                    "name": "暂停配送",
+                    "url": "http://a.lwons.com/time.html"
+                },
+                {
+                    "type": "view",
+                    "name": "意见专区",
+                    "url": "http://a.lwons.com/opt.html"
+                },
+                {
+                    "type": "view",
+                    "name": "修改地址",
+                    "url": "http://a.lwons.com/send.html"
+                }
+            ]
+        }
+    ]
+}

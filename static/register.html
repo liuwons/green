@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://500jia.99yuncai.com/member/index_do.php?fmdo=user&dopost=regnew -->
+<html lang="zh-cn" class=" js "><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户注册 - 五百家：我们自己的菜园子</title>
+<link type="text/css" rel="stylesheet" href="static/reset.css">
+<link type="text/css" rel="stylesheet" href="static/style.css">
+<link type="text/css" rel="stylesheet" href="static/formpage.css">
+<script type="text/javascript" src="static/modernizr.custom.00529.js"></script>
+<script src="static/j.js" language="javascript" type="text/javascript"></script>
+<script src="static/base.js" language="javascript" type="text/javascript"></script>
+<script src="static/CheckPassStrength.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript" src="static/reg_new.js"></script>
+<script type="text/javascript" language="javascript">
+<!--
+var reMethod = "POST",pwdmin = 3;
+
+function changeAuthCode() {
+	var num = 	new Date().getTime();
+	var rand = Math.round(Math.random() * 10000);
+	num = num + rand;
+	$('#ver_code').css('visibility','visible');
+	if ($("#vdimgck")[0]) {
+		$("#vdimgck")[0].src = "../include/vdimgck.php?tag=" + num;
+	}
+	return false;	
+}
+
+function hideVc()
+{
+	$('#ver_code').css('visibility','hidden');
+}
+
+
+$(document).ready(function(){ 
+	$("#passwordLevel").removeClass().addClass("rank r0");
+	$("#vdcode").focus(function(){
+	  var leftpos = $("#vdcode").position().left;
+	  var toppos = $("#vdcode").position().top - 42;
+	  $('#ver_code').css('left', leftpos+'px');
+	  $('#ver_code').css('top', toppos+'px');
+	  $('#ver_code').css('visibility','visible');
+	});
+	$("input[type='password']").click(function(){
+	  hideVc()
+	});
+	$("#txtUsername").click(function(){
+	  hideVc()
+	});
+	$("input[type='radio']").focus(function(){
+	  hideVc()
+	});
+	/*
+	$("#vdcode").blur(function(){
+		  $('#ver_code').css('visibility','hidden');
+	});
+	*/
+})
+
+-->
+</script>
+</head>
+<body class="user_register">
+<!--[if lt IE 7]><p Class="browsehappy">您正在使用<strong>过时</strong>的浏览器。为了确保良好的浏览体验，请您<a href="http://browsehappy.com/">升级浏览器</a>。</p><![endif]-->
+<header>
+  <nav>
+    <h1><a href="http://500jia.99yuncai.com/"><img src="static/logo.png"></a></h1>
+    <ul>
+      <li><a href="http://500jia.99yuncai.com/plus/list.php?tid=7">猴年礼包</a></li>
+      <li><a href="http://500jia.99yuncai.com/plus/list.php?tid=8">会员套餐</a></li>
+      <li class="a"><a href="http://500jia.99yuncai.com/member/login.php">登录</a></li>
+      <li class="b"><a href="http://500jia.99yuncai.com/member/index_do.php?fmdo=user&amp;dopost=regnew">注册</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="main_box">
+  <section>
+    <div>
+      <h1>用户注册</h1>
+      <p>已有账号？ <a href="http://500jia.99yuncai.com/member/login.php">立刻登录</a></p>
+      <br>
+      <form action="http://500jia.99yuncai.com/member/reg_new.php" method="post">
+         <input type="hidden" value="regbase" name="dopost">
+      <input type="hidden" value="1" name="step">
+      <input type="hidden" value="个人" name="mtype">
+		<p class="notice">所有登录信息均为必填项。这些信息用于以后登录五百家系统，请务必牢记。</p>
+        <div class="field">
+          <label for="mobile_input">手机号</label>
+          <input name="userid" type="text" class="text" id="mobile_input" required="required">
+        </div>
+        <div class="field">
+          <label for="password_input">密码</label>
+          <input name="userpwd" type="password" class="password" id="password_input" required="required">
+        </div>
+        <div class="field">
+          <label for="repwd_input">重复密码</label>
+          <input name="userpwdok" type="password" class="password" id="repwd_input" required="required">
+        </div>
+        <div class="submit">
+          <button type="submit">提交</button>
+          <br>
+          <br>
+          <p class="desc">提交注册即表示您认可本站的<a href="http://500jia.99yuncai.com/eula">《用户许可协议》</a></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+<footer>
+  <section>
+    <ul>
+      <li>
+        <h2>官方微信</h2>
+        <p><strong>ilove500jia</strong>微信公众号</p>
+      </li>
+      <li>
+        <h2>客服热线</h2>
+        <p><strong>021-65568176</strong>周一至周五 9:30-17:30</p>
+      </li>
+    </ul>
+  </section>
+  <section class="copyright">
+    <p>©2014-2016 上海有石网络科技有限公司 </p>
+    <a href="http://www.miibeian.gov.cn/" target="miibeian" id="_miibeian">沪ICP备14051139号-1</a></section>
+</footer>
+
+
+</body></html>
