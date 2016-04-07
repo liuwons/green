@@ -16,6 +16,16 @@ import os
 import random
 import requests
 
+def check_wx_request(signature, timestamp, nonce):
+    token = config.settings['wx_token']
+    arr = [token, timestamp, nonce]
+    arr.sort()
+    sh = hashlib.sha1(arr[0] + arr[1] + arr[2]).hexdigest()
+    if sh == signature:
+        return True
+    else:
+        return False
+
 class WX(tornado.web.RequestHandler):
     def get(self):
         signature = self.get_argument('signature', 'default')
