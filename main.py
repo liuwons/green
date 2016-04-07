@@ -2,14 +2,14 @@ import tornado.web
 import tornado.httpserver
 from tornado.options import define, options
 
-from config import *
+import config
 
 define("port", default=80, help="run on the given port", type=int)
 
 
 class Application(tornado.web.Application):
     def __init__(self):
-        tornado.web.Application.__init__(self, handlers, **settings)
+        tornado.web.Application.__init__(self, config.handlers, **config.settings)
 
 
 if __name__ == '__main__':

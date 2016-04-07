@@ -2,8 +2,9 @@
 import os
 import json
 import tornado.web
-from wechat_sdk import WechatConf
-from wechat_sdk import WechatBasic
+
+from wechat_sdk.core.conf import WechatConf
+from wechat_sdk.basic import WechatBasic
 
 settings = {
             'static_path': os.path.join(os.path.dirname(__file__), 'static'),

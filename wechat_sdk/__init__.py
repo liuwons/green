@@ -8,3 +8,6 @@ try:
     from wechat_sdk.ext import WechatExt
 except ImportError:
     pass
+
+
+
