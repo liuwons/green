@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+import json
 import tornado.web
+from wechat_sdk import WechatConf
+from wechat_sdk import WechatBasic
 
 settings = {
             'static_path': os.path.join(os.path.dirname(__file__), 'static'),
@@ -14,6 +17,22 @@ settings = {
 
             'host_name': 'a.lwons.com',
             }
+
+wx_token = None
+wx_appid = None
+wx_secrert = None
+wx_mode = None
+
+with open("conf.json") as f:
+    conf_str = f.read()
+    js = json.loads(conf_str)
+    wx_token = js['token']
+    wx_appid = js['appid']
+    wx_secrert = js['secret']
+    wx_mode = js['mode']
+
+wx_conf = WechatConf(token=wx_token, appid=wx_appid, appsecret=wx_secrert, encrypt_mode=wx_mode)
+wechat = WechatBasic(conf=wx_conf)
 
 from handle import *
 
