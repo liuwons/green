@@ -80,7 +80,7 @@ class WX(tornado.web.RequestHandler):
         nonce = self.get_argument('nonce', 'default')
         if signature != 'default' and timestamp != 'default' and nonce != 'default' \
                 and wechat.check_signature(signature, timestamp, nonce):
-            body = self.request.body
+            body = self.request.body.decode('utf-8')
             try:
                 self.write(self.wx_proc_msg(body))
             except IOError, e:
