@@ -11,6 +11,7 @@ import time
 import config
 import time
 
+
 class Index(tornado.web.RequestHandler):
     def get(self):
         self.redirect("http://blog.lwons.com")

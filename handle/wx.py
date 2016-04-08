@@ -45,7 +45,7 @@ class WX(tornado.web.RequestHandler):
                 ticket = wechat.message.ticket                  # Ticket
                 return wechat.response_text(content=u'欢迎订阅', escape=True)
             elif wechat.message.type == 'unsubscribe':  # unsubscribe
-                return wechat.response_text(content=u'拜拜', escape=True)
+                return None
             elif wechat.message.type == 'scan':  # scan
                 key = wechat.message.key                        # EventKey
                 ticket = wechat.message.ticket                  # Ticket
@@ -82,6 +82,8 @@ class WX(tornado.web.RequestHandler):
                 and wechat.check_signature(signature, timestamp, nonce):
             body = self.request.body.decode('utf-8')
             try:
-                self.write(self.wx_proc_msg(body))
+                result = self.wx_proc_msg(body)
+                if result is not None:
+                    self.write(result)
             except IOError, e:
                 return

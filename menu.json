@@ -6,17 +6,17 @@
                 {
                     "type": "view",
                     "name": "农场简介",
-                    "url": "http://a.lwons.com/index.html"
+                    "url": "http://lwons.com/fw/index.html"
                 },
                 {
                     "type": "view",
                     "name": "了解详情",
-                    "url": "http://a.lwons.com/know.html"
+                    "url": "http://lwons.com/fw/know.html"
                 },
                 {
                     "type": "view",
                     "name": "农场日记",
-                    "url": "http://a.lwons.com/diary.html"
+                    "url": "http://lwons.com/fw/diary.html"
                 }
             ]
         },
@@ -26,12 +26,12 @@
                 {
                     "type": "view",
                     "name": "套餐订购",
-                    "url": "http://a.lwons.com/taocao.html"
+                    "url": "http://lwons.com/fw/taocao.html"
                 },
                 {
                     "type": "view",
                     "name": "99元体验一周",
-                    "url": "http://a.lwons.com/feel.html"
+                    "url": "http://lwons.com/fw/feel.html"
                 }
             ]
         },
@@ -41,17 +41,17 @@
                 {
                     "type": "view",
                     "name": "暂停配送",
-                    "url": "http://a.lwons.com/time.html"
+                    "url": "http://lwons.com/fw/time.html"
                 },
                 {
                     "type": "view",
                     "name": "意见专区",
-                    "url": "http://a.lwons.com/opt.html"
+                    "url": "http://lwons.com/fw/opt.html"
                 },
                 {
                     "type": "view",
                     "name": "修改地址",
-                    "url": "http://a.lwons.com/send.html"
+                    "url": "http://lwons.com/fw/send.html"
                 }
             ]
         }

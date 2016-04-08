@@ -4,7 +4,7 @@ from tornado.options import define, options
 
 import config
 
-define("port", default=80, help="run on the given port", type=int)
+define("port", default=config.settings['port'], help="run on the given port", type=int)
 
 
 class Application(tornado.web.Application):
@@ -13,9 +13,9 @@ class Application(tornado.web.Application):
 
 
 if __name__ == '__main__':
-	app = Application()
-	tornado.options.parse_command_line()
-	http_server = tornado.httpserver.HTTPServer(app)
-	http_server.listen(options.port)
-	tornado.ioloop.IOLoop.instance().start()
-    
+    app = Application()
+    tornado.options.parse_command_line()
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+
