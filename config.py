@@ -45,7 +45,7 @@ from handle import *
 
 handlers=[
         (r'/', common.Index),
-        (r'/fw/wx', wx.WX),
+        (r'/wx', wx.WX),
 
         (r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__), "static")}),
         (r"/(.*\.html)", tornado.web.StaticFileHandler, {"path": "static/"}),
