@@ -64,7 +64,6 @@ class WX(tornado.web.RequestHandler):
                     host_id = mongo.insert_host(source)
                     return wechat.response_text(content=u'添加主机成功，主机ID：' + host_id)
                 elif key == 'HOST_DELETE':
-
                     return wechat.response_text(content=u'删除主机')
                 elif key == 'HOST_STATUS':
                     return wechat.response_text(content=u'主机状态')
@@ -73,7 +72,14 @@ class WX(tornado.web.RequestHandler):
                 elif key == 'MINE_PROFILE':
                     return wechat.response_text(content=u'个人信息')
                 elif key == 'MINE_HOSTS':
-                    return wechat.response_text(content=u'主机列表')
+                    hosts = mongo.query_hosts(source)
+                    if hosts is None or len(hosts) == 0:
+                        return wechat.response_text(content=u'您还尚未添加任何主机')
+                    resp = u'<table>'
+                    for i in range(len(hosts)):
+                        resp += u'''<tr><td>%s</td><td>%s</td></tr>''' % (hosts[i]['id'], hosts[i]['time'])
+                    resp += u'</table>'
+                    return wechat.response_text(content=resp)
             elif wechat.message.type == 'view':  # menu link view
                 key = wechat.message.key                        # EventKey
                 return wechat.response_text(key, escape=True)
