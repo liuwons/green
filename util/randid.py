@@ -8,3 +8,4 @@ def randid(length):
     for i in range(length):
         idx = random.randint(0, len(alphabet)-1)
         result += alphabet[idx]
+    return result

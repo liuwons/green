@@ -44,7 +44,7 @@ class WX(tornado.web.RequestHandler):
                 key = wechat.message.key                        # EventKey
                 ticket = wechat.message.ticket                  # Ticket
                 mongo.upsert_user(source)
-                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''', escape=False)
+                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''')
             elif wechat.message.type == 'unsubscribe':  # unsubscribe
                 mongo.delete_user(source)
                 return None
@@ -60,19 +60,20 @@ class WX(tornado.web.RequestHandler):
                 if key == 'HOST_ADD':
                     host_count = mongo.host_count(source)
                     if host_count >= max_host_count:
-                        return wechat.response_text(content=u'添加主机失败，已达到最大主机数目', escape=True)
+                        return wechat.response_text(content=u'添加主机失败，已达到最大主机数目')
                     host_id = mongo.insert_host(source)
-                    return wechat.response_text(content=u'添加主机成功，主机ID：' + host_id, escape=True)
+                    return wechat.response_text(content=u'添加主机成功，主机ID：' + host_id)
                 elif key == 'HOST_DELETE':
-                    return wechat.response_text(content=u'删除主机', escape=True)
+
+                    return wechat.response_text(content=u'删除主机')
                 elif key == 'HOST_STATUS':
-                    return wechat.response_text(content=u'主机状态', escape=True)
+                    return wechat.response_text(content=u'主机状态')
                 elif key == 'HOST_COMMAND':
-                    return wechat.response_text(content=u'主机命令', escape=True)
+                    return wechat.response_text(content=u'主机命令')
                 elif key == 'MINE_PROFILE':
-                    return wechat.response_text(content=u'个人信息', escape=True)
+                    return wechat.response_text(content=u'个人信息')
                 elif key == 'MINE_HOSTS':
-                    return wechat.response_text(content=u'主机列表', escape=True)
+                    return wechat.response_text(content=u'主机列表')
             elif wechat.message.type == 'view':  # menu link view
                 key = wechat.message.key                        # EventKey
                 return wechat.response_text(key, escape=True)
@@ -80,7 +81,7 @@ class WX(tornado.web.RequestHandler):
                 status = wechat.message.status                  # Status
             elif wechat.message.type in ['scancode_push', 'scancode_waitmsg', 'pic_sysphoto', 'pic_photo_or_album', 'pic_weixin', 'location_select']:  # others
                 key = wechat.message.key                        # EventKey
-        return wechat.response_text(content=u'知道了', escape=True)
+        return wechat.response_text(content=u'知道了')
 
     def get(self):
         signature = self.get_argument('signature', 'default')
