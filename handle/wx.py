@@ -43,8 +43,10 @@ class WX(tornado.web.RequestHandler):
             if wechat.message.type == 'subscribe':  # subscribe
                 key = wechat.message.key                        # EventKey
                 ticket = wechat.message.ticket                  # Ticket
-                return wechat.response_text(content=u'欢迎订阅', escape=True)
+                mongo.upsert_user(source)
+                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''', escape=True)
             elif wechat.message.type == 'unsubscribe':  # unsubscribe
+                mongo.delete_user(source)
                 return None
             elif wechat.message.type == 'scan':  # scan
                 key = wechat.message.key                        # EventKey
@@ -56,7 +58,11 @@ class WX(tornado.web.RequestHandler):
             elif wechat.message.type == 'click':  # menu click
                 key = wechat.message.key                       # EventKey
                 if key == 'HOST_ADD':
-                    return wechat.response_text(content=u'添加主机', escape=True)
+                    host_count = mongo.host_count(source)
+                    if host_count >= max_host_count:
+                        return wechat.response_text(content=u'添加主机失败，已达到最大主机数目', escape=True)
+                    host_id = mongo.insert_host(source)
+                    return wechat.response_text(content=u'添加主机成功，主机ID：' + host_id, escape=True)
                 elif key == 'HOST_DELETE':
                     return wechat.response_text(content=u'删除主机', escape=True)
                 elif key == 'HOST_STATUS':

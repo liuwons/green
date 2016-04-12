@@ -5,6 +5,7 @@ import tornado.web
 
 from wechat_sdk.core.conf import WechatConf
 from wechat_sdk.basic import WechatBasic
+from util.mongo_util import *
 
 settings = {
             'static_path': os.path.join(os.path.dirname(__file__), 'static'),
@@ -18,18 +19,36 @@ settings = {
             'wx_token': 'weixin',
             }
 
+max_host_count = None
+
 wx_token = None
 wx_appid = None
 wx_secrert = None
 wx_mode = None
 
+mongo_db_name = None
+
 with open("conf.json") as f:
     conf_str = f.read()
     js = json.loads(conf_str)
-    wx_token = js['token']
-    wx_appid = js['appid']
-    wx_secrert = js['secret']
-    wx_mode = js['mode']
+    if 'token' in js:
+        wx_token = js['token']
+    if 'appid' in js:
+        wx_appid = js['appid']
+    if 'secret' in js:
+        wx_secrert = js['secret']
+    if 'mode' in js:
+        wx_mode = js['mode']
+    if 'mongo_db' in js:
+        mongo_db = js['mongo_db']
+    if 'max_host_count' in js:
+        max_host_count = js['max_host_count']
+if mongo_db_name is None:
+    mongo_db_name = 'green'
+if max_host_count is None:
+    max_host_count = 3
+
+mongo = MongoUtil(db_ip='localhost', db_name=mongo_db_name)
 
 wx_conf = WechatConf(token=wx_token, appid=wx_appid, appsecret=wx_secrert, encrypt_mode=wx_mode)
 wechat = WechatBasic(conf=wx_conf)
