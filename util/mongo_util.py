@@ -34,7 +34,7 @@ class MongoUtil:
         self.cmmd_collection.remove({'openid': openid})
 
     def query_user(self, openid):
-        users = self.user_collection.find({'openid': openid})
+        users = self.user_collection.find_one({'openid': openid})
         if users.count() == 0:
             return None
         else:
@@ -56,5 +56,8 @@ class MongoUtil:
         if hosts.count() == 0:
             return None
         else:
-            return hosts[:]
+            results = []
+            for host in hosts:
+                results.append(host)
+            return results
 
