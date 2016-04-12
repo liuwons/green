@@ -25,7 +25,7 @@ class MongoUtil:
         return randid.randid(4) + openid[-4:]
 
     def upsert_user(self, openid):
-        user = {'openid': openid, 'hosts': [], 'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        user = {'openid': openid, 'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         self.user_collection.update({'openid': openid}, user, upsert=True)
 
     def delete_user(self, openid):
@@ -41,10 +41,7 @@ class MongoUtil:
             return users[0]
 
     def host_count(self, openid):
-        user = self.query_user(openid)
-        if user is None or 'hosts' not in user:
-            return 0
-        return len(user['hosts'])
+        return self.host_collection.find({'openid': openid}).count()
 
     def insert_host(self, openid):
         host = {'id': self.make_id(openid)+openid[-4:], 'openid': openid, 'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
