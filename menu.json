@@ -1,57 +1,52 @@
 {
     "button":[
         {
-            "name": "走进农场",
+            "name": "主机管理",
             "sub_button": [
                 {
-                    "type": "view",
-                    "name": "农场简介",
-                    "url": "http://lwons.com/fw/index.html"
+                    "type": "click",
+                    "name": "添加主机",
+                    "key": "HOST_ADD"
                 },
                 {
-                    "type": "view",
-                    "name": "了解详情",
-                    "url": "http://lwons.com/fw/know.html"
+                    "type": "click",
+                    "name": "删除主机",
+                    "key": "HOST_DELETE"
                 },
                 {
-                    "type": "view",
-                    "name": "农场日记",
-                    "url": "http://lwons.com/fw/diary.html"
+                    "type": "click",
+                    "name": "主机状态",
+                    "key": "HOST_STATUS"
+                },
+                {
+                    "type": "click",
+                    "name": "主机命令",
+                    "key": "HOST_COMMAND"
                 }
             ]
         },
         {
-            "name": "加入我们",
+            "name": "我的账户",
             "sub_button": [
                 {
-                    "type": "view",
-                    "name": "套餐订购",
-                    "url": "http://lwons.com/fw/taocao.html"
+                    "type": "click",
+                    "name": "个人信息",
+                    "key": "MINE_PROFILE"
                 },
                 {
-                    "type": "view",
-                    "name": "99元体验一周",
-                    "url": "http://lwons.com/fw/feel.html"
+                    "type": "click",
+                    "name": "主机列表",
+                    "key": "MINE_HOSTS"
                 }
             ]
         },
         {
-            "name": "会员分享",
+            "name": "关于我们",
             "sub_button": [
                 {
                     "type": "view",
-                    "name": "暂停配送",
-                    "url": "http://lwons.com/fw/time.html"
-                },
-                {
-                    "type": "view",
-                    "name": "意见专区",
-                    "url": "http://lwons.com/fw/opt.html"
-                },
-                {
-                    "type": "view",
-                    "name": "修改地址",
-                    "url": "http://lwons.com/fw/send.html"
+                    "name": "项目主页",
+                    "url": "https://github.com/liuwons/green"
                 }
             ]
         }

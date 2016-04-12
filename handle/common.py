@@ -2,15 +2,6 @@
 import tornado.escape
 import tornado.web
 
-from BaseHTTPServer import HTTPServer
-import base64
-import sys
-import json
-import time
-
-import config
-import time
-
 
 class Index(tornado.web.RequestHandler):
     def get(self):

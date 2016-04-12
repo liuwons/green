@@ -43,7 +43,7 @@ with open("menu.json") as f:
 
 from handle import *
 
-handlers=[
+web_handlers = [
         (r'/', common.Index),
         (r'/wx', wx.WX),
 

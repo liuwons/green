@@ -1,3 +1,4 @@
+tornado==4.3
 six==1.10.0
 requests==2.6.0
 pycrypto==2.6.1

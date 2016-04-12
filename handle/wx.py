@@ -54,9 +54,22 @@ class WX(tornado.web.RequestHandler):
                 longitude = wechat.message.longitude            # Longitude
                 precision = wechat.message.precision            # Precision
             elif wechat.message.type == 'click':  # menu click
-                key = wechat.message.key                        # EventKey
+                key = wechat.message.key                       # EventKey
+                if key == 'HOST_ADD':
+                    return wechat.response_text(content=u'添加主机', escape=True)
+                elif key == 'HOST_DELETE':
+                    return wechat.response_text(content=u'删除主机', escape=True)
+                elif key == 'HOST_STATUS':
+                    return wechat.response_text(content=u'主机状态', escape=True)
+                elif key == 'HOST_COMMAND':
+                    return wechat.response_text(content=u'主机命令', escape=True)
+                elif key == 'MINE_PROFILE':
+                    return wechat.response_text(content=u'个人信息', escape=True)
+                elif key == 'MINE_HOSTS':
+                    return wechat.response_text(content=u'主机列表', escape=True)
             elif wechat.message.type == 'view':  # menu link view
                 key = wechat.message.key                        # EventKey
+                return wechat.response_text(key, escape=True)
             elif wechat.message.type == 'templatesendjobfinish':  # template
                 status = wechat.message.status                  # Status
             elif wechat.message.type in ['scancode_push', 'scancode_waitmsg', 'pic_sysphoto', 'pic_photo_or_album', 'pic_weixin', 'location_select']:  # others
