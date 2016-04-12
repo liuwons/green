@@ -44,7 +44,7 @@ class WX(tornado.web.RequestHandler):
                 key = wechat.message.key                        # EventKey
                 ticket = wechat.message.ticket                  # Ticket
                 mongo.upsert_user(source)
-                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''', escape=True)
+                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''', escape=False)
             elif wechat.message.type == 'unsubscribe':  # unsubscribe
                 mongo.delete_user(source)
                 return None
