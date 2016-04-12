@@ -64,21 +64,26 @@ class WX(tornado.web.RequestHandler):
                     host_id = mongo.insert_host(source)
                     return wechat.response_text(content=u'添加主机成功，主机ID：' + host_id)
                 elif key == 'HOST_DELETE':
-                    return wechat.response_text(content=u'删除主机')
+                    hosts = mongo.query_hosts(source)
+                    if hosts is None or len(hosts) == 0:
+                        return wechat.response_text(content=u'您还尚未添加任何主机')
+                    resp = u'选择需要删除的主机:\n'
+                    for i in range(len(hosts)):
+                        resp += u'''<a href="http://lwons.com/fw/host_delete?id=%s">%s</a>\n''' % (hosts[i]['id'], hosts[i]['id'])
+                    return wechat.response_text(content=resp)
                 elif key == 'HOST_STATUS':
-                    return wechat.response_text(content=u'主机状态')
+                    return wechat.response_text(content=u'''<a href="http://lwons.com/fw/host_status?id=%s">点击查看主机状态</a>''' % source)
                 elif key == 'HOST_COMMAND':
-                    return wechat.response_text(content=u'主机命令')
+                    return wechat.response_text(content=u'''<a href="http://lwons.com/fw/host_cmmd?id=%s">进入命令页</a>''' % source)
                 elif key == 'MINE_PROFILE':
                     return wechat.response_text(content=u'个人信息')
                 elif key == 'MINE_HOSTS':
                     hosts = mongo.query_hosts(source)
                     if hosts is None or len(hosts) == 0:
                         return wechat.response_text(content=u'您还尚未添加任何主机')
-                    resp = u'<table>'
+                    resp = u'您的所有主机：\n'
                     for i in range(len(hosts)):
-                        resp += u'''<tr><td>%s</td><td>%s</td></tr>''' % (hosts[i]['id'], hosts[i]['time'])
-                    resp += u'</table>'
+                        resp += u'%s  %s\n' % (hosts[i]['id'], hosts[i]['time'])
                     return wechat.response_text(content=resp)
             elif wechat.message.type == 'view':  # menu link view
                 key = wechat.message.key                        # EventKey
