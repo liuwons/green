@@ -44,7 +44,7 @@ class MongoUtil:
         return self.host_collection.find({'openid': openid}).count()
 
     def insert_host(self, openid):
-        host = {'id': self.make_id(openid)+openid[-4:], 'openid': openid, 'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        host = {'id': self.make_id(openid), 'openid': openid, 'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         self.host_collection.insert(host)
         return host['id']
 
