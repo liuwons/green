@@ -53,7 +53,7 @@ with open("conf.json") as f:
     if 'tuling_key' in js:
         tuling_key = js['tuling_key']
     if 'auto_reply' in js:
-        auto_reply_mode = True if js['tuling_key'] == 'yes' else False
+        auto_reply_mode = True if js['auto_reply'] == 'yes' else False
 
 if mongo_db_name is None:
     mongo_db_name = 'green'
