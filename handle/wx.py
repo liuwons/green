@@ -21,6 +21,8 @@ class WX(tornado.web.RequestHandler):
         raw = wechat.message.raw        # raw text
         if isinstance(wechat.message, TextMessage):
             content = wechat.message.content
+            if content == u'不要回复':
+                return wechat.response_none()
             reply = auto_reply.reply(content)
             if reply is not None:
                 return wechat.response_text(content=reply)
@@ -49,7 +51,7 @@ class WX(tornado.web.RequestHandler):
                 key = wechat.message.key                        # EventKey
                 ticket = wechat.message.ticket                  # Ticket
                 mongo.upsert_user(source)
-                return wechat.response_text(content=u'''欢迎订阅，<a href="http://lwons.com">我的主页</a>''')
+                return wechat.response_text(content=u'''欢迎关注''')
             elif wechat.message.type == 'unsubscribe':  # unsubscribe
                 mongo.delete_user(source)
                 return None
