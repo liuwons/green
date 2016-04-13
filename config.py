@@ -6,6 +6,7 @@ import tornado.web
 from wechat_sdk.core.conf import WechatConf
 from wechat_sdk.basic import WechatBasic
 from util.mongo_util import *
+from util.auto_reply import *
 
 settings = {
             'static_path': os.path.join(os.path.dirname(__file__), 'static'),
@@ -28,6 +29,10 @@ wx_mode = None
 
 mongo_db_name = None
 
+auto_reply_mode = False
+tuling_url = None
+tuling_key = None
+
 with open("conf.json") as f:
     conf_str = f.read()
     js = json.loads(conf_str)
@@ -43,10 +48,23 @@ with open("conf.json") as f:
         mongo_db = js['mongo_db']
     if 'max_host_count' in js:
         max_host_count = js['max_host_count']
+    if 'tuling_url' in js:
+        tuling_url = js['tuling_url']
+    if 'tuling_key' in js:
+        tuling_key = js['tuling_key']
+    if 'auto_reply' in js:
+        auto_reply_mode = True if js['tuling_key'] == 'yes' else False
+
 if mongo_db_name is None:
     mongo_db_name = 'green'
 if max_host_count is None:
     max_host_count = 3
+
+auto_reply = None
+if auto_reply_mode and tuling_key is not None and tuling_url is not None:
+    auto_reply = TulingAutoReply(tuling_key, tuling_url)
+else:
+    auto_reply = DefaultAutoReply()
 
 mongo = MongoUtil(db_ip='localhost', db_name=mongo_db_name)
 
