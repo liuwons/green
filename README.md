@@ -1,5 +1,13 @@
 # green
 
+## 说明
+
+本仓库是微信公众号 **Ms_haoqi** 的源代码，扫码关注：
+
+![二维码](http://img.blog.csdn.net/20160419140351193)
+
+更多介绍可以参考博客 [Python快速搭建自动回复微信公众号](http://blog.csdn.net/tobacco5648/article/details/51190039)。
+
 ## 使用配置
 
 需要在根目录下添加```conf.json```文件，内容为：
