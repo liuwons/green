@@ -20,12 +20,12 @@ settings = {
             'wx_token': 'weixin',
             }
 
-max_host_count = None
+max_host_count = None  #每个用户能拥有的最大主机数目
 
-wx_token = None
-wx_appid = None
-wx_secrert = None
-wx_mode = None
+wx_token = None  # 微信公众号Token
+wx_appid = None  # 微信公众号AppID
+wx_secrert = None  # 微信公众号AppSecret
+wx_mode = None  # 是否加密
 
 mongo_db_name = None
 
