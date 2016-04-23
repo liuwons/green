@@ -11,7 +11,7 @@ class WX(tornado.web.RequestHandler):
         try:
             wechat.parse_data(body)
         except ParseError:
-            print 'Invalid Body Text'
+            print '[ERROR] Parse message failed.'
             return
         id = wechat.message.id          # MsgId
         target = wechat.message.target  # ToUserName
@@ -21,7 +21,7 @@ class WX(tornado.web.RequestHandler):
         raw = wechat.message.raw        # raw text
         if isinstance(wechat.message, TextMessage):
             content = wechat.message.content
-            if content == u'不要回复':
+            if len(content.replace(' ', '')) == 0:
                 return wechat.response_none()
             reply = auto_reply.reply(content)
             if reply is not None:
