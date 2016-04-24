@@ -110,7 +110,7 @@ class WX(tornado.web.RequestHandler):
                 and wechat.check_signature(signature, timestamp, nonce):
             self.write(echostr)
         else:
-            self.write('Not Open')
+            self.write('Page Not Available')
 
     def post(self):
         signature = self.get_argument('signature', 'default')
