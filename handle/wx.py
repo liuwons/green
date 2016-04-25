@@ -27,7 +27,7 @@ class WX(tornado.web.RequestHandler):
             if reply is not None:
                 return wechat.response_text(content=reply)
             else:
-                return wechat.response_text(content=u"success")
+                return wechat.response_none()
         if isinstance(wechat.message, ImageMessage):
             picurl = wechat.message.picurl                     # PicUrl
             media_id = wechat.message.media_id                 # MediaId
