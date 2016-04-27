@@ -2,11 +2,19 @@
 
 ## 说明
 
-本仓库是微信公众号 **Ms_haoqi** 的源代码，扫码关注：
+本仓库是微信公众号 **Ms_haoqi** 的源代码，基于[wechat-python-sdk](https://github.com/wechat-python-sdk/wechat-python-sdk)和[Tornado](https://github.com/tornadoweb/tornado)，使用图灵机器人API回复用户的消息，可以与用户进行中文对话。
+
+扫码查看公众号：
 
 ![二维码](http://img.blog.csdn.net/20160419140351193)
 
 更多介绍可以参考博客 [Python快速搭建自动回复微信公众号](http://blog.csdn.net/tobacco5648/article/details/51190039)。
+
+## 依赖
+
+```shell
+pip install -r  requirements.txt
+```
 
 ## 使用配置
 
