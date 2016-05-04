@@ -116,6 +116,7 @@ class WX(tornado.web.RequestHandler):
         signature = self.get_argument('signature', 'default')
         timestamp = self.get_argument('timestamp', 'default')
         nonce = self.get_argument('nonce', 'default')
+        # check if the data is sent by WeChat server
         if signature != 'default' and timestamp != 'default' and nonce != 'default' \
                 and wechat.check_signature(signature, timestamp, nonce):
             body = self.request.body.decode('utf-8')
