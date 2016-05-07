@@ -29,9 +29,9 @@ wx_mode = None  # 是否加密
 
 mongo_db_name = None
 
-auto_reply_mode = False
-tuling_url = None
-tuling_key = None
+auto_reply_mode = False  # 是否自动回复
+tuling_url = None  # 图灵机器人请求url
+tuling_key = None  # 图灵机器人API KEY
 
 with open("conf.json") as f:
     conf_str = f.read()
