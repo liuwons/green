@@ -62,9 +62,9 @@ if max_host_count is None:
 
 auto_reply = None
 if auto_reply_mode and tuling_key is not None and tuling_url is not None:
-    auto_reply = TulingAutoReply(tuling_key, tuling_url)
+    auto_reply = TulingAutoReply(tuling_key, tuling_url)  # tuling reply
 else:
-    auto_reply = DefaultAutoReply()
+    auto_reply = DefaultAutoReply()  # reply none
 
 mongo = MongoUtil(db_ip='localhost', db_name=mongo_db_name)
 
