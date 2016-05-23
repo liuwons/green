@@ -47,3 +47,17 @@ pip install -r  requirements.txt
 - ```tuling_key``` : 修改为申请的图灵API KEY
 
 另外需要本地安装有MongoDB
+
+## 注意事项
+
+### 端口
+
+微信公众号只能设置在80端口，因此 **green** 默认运行在80端口，如果自己配置端口转发，希望 **green** 运行在其他端口，可以修改 ```config.py``` 文件中 ```settings``` 中的 ```port``` 字段。
+
+### 服务器url
+
+**green** 的默认配置会将所有请求路由到 ```http://ip:port/wx``` ，如果希望修改此路由，可以在 ```config.py``` 文件中 修改路由表 ```web_handlers``` 。
+
+### 图灵key
+
+默认的图灵key不能使用，需要自己去 [图灵机器人官网](http://www.tuling123.com/) 申请自己的图灵key， 再填写到 ```conf.json``` 对应字段下。
