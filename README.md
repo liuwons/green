@@ -33,7 +33,9 @@ pip install -r  requirements.txt
 
 	"auto_reply": "yes",
 	"tuling_key": "1d2679920f734bc0a23734ace8aec5b1",
-    "tuling_url": "http://www.tuling123.com/openapi/api"
+    "tuling_url": "http://www.tuling123.com/openapi/api",
+
+    "type": "subscribe"
 }
 ```
 

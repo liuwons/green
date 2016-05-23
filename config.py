@@ -16,7 +16,7 @@ settings = {
             'session_secret': "3cdcb1f07693b6e75ab50b466a40b9977db123440c28307f428b25e2231f1bcc",
             'session_timeout': 3600,
 
-            'port': 5601,
+            'port': 80,
             'wx_token': 'weixin',
             }
 
@@ -32,6 +32,8 @@ mongo_db_name = None
 auto_reply_mode = False  # 是否自动回复
 tuling_url = None  # 图灵机器人请求url
 tuling_key = None  # 图灵机器人API KEY
+
+account_type = "subscribe"
 
 with open("conf.json") as f:
     conf_str = f.read()
@@ -54,6 +56,8 @@ with open("conf.json") as f:
         tuling_key = js['tuling_key']
     if 'auto_reply' in js:
         auto_reply_mode = True if js['auto_reply'] == 'yes' else False
+    if 'type' in js:
+        account_type = js['type']
 
 if mongo_db_name is None:
     mongo_db_name = 'green'
@@ -71,11 +75,12 @@ mongo = MongoUtil(db_ip='localhost', db_name=mongo_db_name)
 wx_conf = WechatConf(token=wx_token, appid=wx_appid, appsecret=wx_secrert, encrypt_mode=wx_mode)
 wechat = WechatBasic(conf=wx_conf)
 
-with open("menu.json") as f:
-    menu_str = f.read()
-    js = json.loads(menu_str)
-    wechat.delete_menu()
-    wechat.create_menu(js)
+if account_type == 'service':
+    with open("menu.json") as f:
+        menu_str = f.read()
+        js = json.loads(menu_str)
+        wechat.delete_menu()
+        wechat.create_menu(js)
 
 
 from handle import *
