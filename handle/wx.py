@@ -23,11 +23,49 @@ class WX(tornado.web.RequestHandler):
             content = wechat.message.content
             if len(content.replace(' ', '')) == 0:
                 return wechat.response_none()
-            reply = auto_reply.reply(content)
-            if reply is not None:
-                return wechat.response_text(content=reply)
-            else:
-                return wechat.response_none()
+            li = content.lower().split()
+            if li[0] == "borrow":
+                if len(li) == 1:
+                    return wechat.response_text(content="Camera:\n7D:101\n6D:102\n5D:103\n280:104\nBMCC:105\nLens:\n16-35:201\n24-105:202\n70-200F4:203\n70-200F2.8:204\n35:205\nStorgeCard:\n280-card-01:301\n280-card-02:302\n280-card-03:303\n280-card-04:304\nSD-01:305\nSD-02:306\nSD-03:307\nSD-04:308\nSD-05:309\nBattery:\n280-LargeBattery-01:401\n280-LargeBattery-02:402\n280-SmallBattery:403\nTripod:\nt1:501\nt2:502\nt3:503\n")
+                else:
+                    shebei = li[1]
+                    shebeiList = []
+                    status = 0
+                    with open('list.csv', 'rb') as csvfile:
+                        reader = csv.reader(csvfile, delimiter=' ')
+                        for row in reader:
+                            rowString = ' '.join(row)
+                            if shebei in rowString:
+                                rowString = rowString[:-1]
+                                rowString = rowString + "0"
+                                status = 1
+                            shebeiList.append(rowString.split())
+                    csvfile.close()
+                    os.remove('list.csv')
+                    csvfile = open('list.csv', 'wb')
+                    writer = csv.writer(csvfile, delimiter=' ')
+                    print("rows:")
+                    print(shebeiList)
+                    writer.writerows(shebeiList)
+                    csvfile.close()
+                    if status == 1:
+                        return wechat.response_text(content="succeed")
+                    else:
+                        return wechat.response_text(content="failed")
+
+
+
+
+
+
+
+        #            if fileOne == open('shebei.csv', 'rwb'):
+        #                fileOneReader = csv.reader(fileOne, delimiter=' ')
+        #                fileOneWriter = csv.writer()
+            print("success!")
+            print(content)
+
+            return wechat.response_text(content="hello")
         if isinstance(wechat.message, ImageMessage):
             picurl = wechat.message.picurl                     # PicUrl
             media_id = wechat.message.media_id                 # MediaId
