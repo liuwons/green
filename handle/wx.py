@@ -29,6 +29,7 @@ class WX(tornado.web.RequestHandler):
                     return wechat.response_text(content="Camera:\n7D:101\n6D:102\n5D:103\n280:104\nBMCC:105\nLens:\n16-35:201\n24-105:202\n70-200F4:203\n70-200F2.8:204\n35:205\nStorgeCard:\n280-card-01:301\n280-card-02:302\n280-card-03:303\n280-card-04:304\nSD-01:305\nSD-02:306\nSD-03:307\nSD-04:308\nSD-05:309\nBattery:\n280-LargeBattery-01:401\n280-LargeBattery-02:402\n280-SmallBattery:403\nTripod:\nt1:501\nt2:502\nt3:503\n")
                 else:
                     shebei = li[1]
+                    print(shebei)
                     shebeiList = []
                     status = 0
                     with open('list.csv', 'rb') as csvfile:
