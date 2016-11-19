@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import tornado.escape
 import tornado.web
+import csv
+import os
+
 
 from config import *
 from wechat_sdk.messages import *
@@ -31,13 +34,17 @@ class WX(tornado.web.RequestHandler):
                 else:
                     shebei = li[1]
                     print(shebei)
+                    print(shebei)
+                    print(shebei)
+                    print(shebei)
                     shebeiList = []
                     status = 0
-                    csvfile = open('list.csv', 'rb'):
+                    csvfile = open('list.csv', 'rb')
+                    print("open file successfully")
                     reader = csv.reader(csvfile, delimiter=' ')
                     print(reader)
                     for row in reader:
-                        print(row)
+                        print row
                         rowString = ' '.join(row)
                         if shebei in rowString:
                             rowString = rowString[:-1]
@@ -168,4 +175,3 @@ class WX(tornado.web.RequestHandler):
                     self.write(result)
             except IOError, e:
                 return
-
