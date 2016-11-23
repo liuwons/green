@@ -29,7 +29,7 @@ class WX(tornado.web.RequestHandler):
             print(li)
             if li[0] == 'borrow':
                 if len(li) == 1:
-                    return wechat.response_text(content=DBProcess.showEquipment)
+                    return wechat.response_text(content=DBProcess.showEquipment())
                 elif len(li) == 2:
                     return wechat.response_text(content=DBProcess.borrowEquipment(li[1]))
                 else:
