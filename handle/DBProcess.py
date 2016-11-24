@@ -108,9 +108,9 @@ def showEquipment():
 
 	return returnString
 
-#print(checkDB())
-#print(borrowEquipment('101'))
-#print(checkDB())
-#print(returnEquipment('101'))
-#print(checkDB())
-#print(showEquipment())
+# print(checkDB())
+# print(borrowEquipment('101'))
+# print(checkDB())
+# print(returnEquipment('101'))
+# print(checkDB())
+# print(showEquipment())
