@@ -17,7 +17,6 @@ def checkDB():
 				DBResult.append(row)
 			else:
 				return 2 #list.csv error,the status flag must be 1, 0 or *
-	print DBResult
 	return DBResult
 
 
