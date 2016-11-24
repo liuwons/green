@@ -3,6 +3,7 @@ import tornado.escape
 import tornado.web
 import csv
 import DBProcess
+import datetime
 
 
 from config import *
@@ -28,7 +29,7 @@ class WX(tornado.web.RequestHandler):
                 return wechat.response_none()
             li = content.lower().encode('utf-8').split()
             print(li)
-            if li[0] == 'borrow':
+            if li[0] == 'borrow' or li[0] == 'check':
                 if len(li) == 1:
                     DBResult = []
                     with open('list.csv', 'rb') as csvfile:
@@ -67,18 +68,18 @@ class WX(tornado.web.RequestHandler):
                         return wechat.response_text(content="list.csv error")
                     with open('log.csv', 'ab') as csvfile:
                 		writer = csv.writer(csvfile, delimiter=' ')
-                		writer.writerow([source, 'borrow', li[1], time])
+                		writer.writerow([source, li[2], 'borrow', li[1], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
             if  li[0] == 'return':
-                if len(li) == 2:
+                if len(li) == 3:
                     text = DBProcess.returnEquipment(li[1])
                     if text == 2:
                         return wechat.response_text(content="list.csv error")
                     with open('log.csv', 'ab') as csvfile:
                 		writer = csv.writer(csvfile, delimiter=' ')
-                		writer.writerow([source, 'return', li[1], time])
+                		writer.writerow([li[3], 'return', li[1], time, ])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
@@ -89,11 +90,13 @@ class WX(tornado.web.RequestHandler):
                 with open('log.csv', 'rb') as csvfile:
                     reader = csv.reader(csvfile, delimiter=' ')
                     for row in reader:
-                        strList += row
-                strList = strList[-15:-1]
+                        strList.append(row)
+                if len(strList) > 16:
+                    strList = strList[-15:-1]
+
                 for s in strList:
                     str += s.join('-')
-                    str += '/n'
+                    str += '\n'
 
                 return wechat.response_text(content=str)
 
