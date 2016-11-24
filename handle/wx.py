@@ -95,7 +95,7 @@ class WX(tornado.web.RequestHandler):
                     strList = strList[-15:-1]
 
                 for s in strList:
-                    str += s[1:].join('-')
+                    str += '-'.join(s[1:])
                     str += '\n'
 
                 return wechat.response_text(content=str)
