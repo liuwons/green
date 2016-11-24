@@ -49,9 +49,13 @@ class WX(tornado.web.RequestHandler):
                     for i in range(len(DBResult)):
                         if DBResult[i][1] == '1':
                             returnString += DBResult[i][2]
+                            returnString += ':'
+                            returnString += DBResult[i][0]
                             returnString += ' Available\n'
                         elif DBResult[i][1] == '0':
                             returnString += DBResult[i][2]
+                            returnString += ':'
+                            returnString += DBResult[i][0]
                             returnString += ' Unavailable\n'
                         else:
                             returnString += '***'
