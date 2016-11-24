@@ -87,7 +87,7 @@ class WX(tornado.web.RequestHandler):
                 str = ''
                 i = 0
                 with open('log.csv', 'rb') as csvfile:
-            		reader = csv.reader(csvfile, delimiter=' ')
+                    reader = csv.reader(csvfile, delimiter=' ')
                     for row in reader:
                         strList += row
                 strList = strList[-15:-1]
