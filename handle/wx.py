@@ -78,7 +78,7 @@ class WX(tornado.web.RequestHandler):
                         return wechat.response_text(content="list.csv error")
                     with open('log.csv', 'ab') as csvfile:
                 		writer = csv.writer(csvfile, delimiter=' ')
-                		writer.writerow(source, 'return', [li[1], time])
+                		writer.writerow([source, 'return', li[1], time])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
