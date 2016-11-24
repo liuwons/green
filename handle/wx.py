@@ -26,9 +26,9 @@ class WX(tornado.web.RequestHandler):
             content = wechat.message.content
             if len(content.replace(' ', '')) == 0:
                 return wechat.response_none()
-            li = content.lower().split()
+            li = content.lower().encode('utf-8').split()
             print(li)
-            if li[0] == u'borrow':
+            if li[0] == 'borrow':
                 if len(li) == 1:
                     text = DBProcess.showEquipment()
                     if text == 2:
@@ -41,7 +41,7 @@ class WX(tornado.web.RequestHandler):
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
-            if  li[0] == u'return':
+            if  li[0] == 'return':
                 if len(li) == 2:
                     text = DBProcess.returnEquipment(li[1])
                     if text == 2:
