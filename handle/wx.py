@@ -32,31 +32,31 @@ class WX(tornado.web.RequestHandler):
                 if len(li) == 1:
                     DBResult = []
                     with open('list.csv', 'rb') as csvfile:
-    		            reader = csv.reader(csvfile, delimiter=' ')
-    		            for row in reader:
+                        reader = csv.reader(csvfile, delimiter=' ')
+                        for row in reader:
                             print row
-    			            if row[1] == '0':
-    				            DBResult.append(row)
-    			            elif row[1] == '1':
-    				            DBResult.append(row)
-    			            elif row[1] == '*':
-    				            DBResult.append(row)
-    			            else:
-    				            return wechat.response_text(content="list.csv error")#list.csv error,the status flag must be 1, 0 or *
+                            if row[1] == '0':
+                                DBResult.append(row)
+                            elif row[1] == '1':
+                                DBResult.append(row)
+                            elif row[1] == '*':
+                                DBResult.append(row)
+                            else:
+                                return wechat.response_text(content="list.csv error")#list.csv error,the status flag must be 1, 0 or *
 
 
-    	            returnString = ''
-                    for i in range(len(DBResult)):
-                        if DBList[i][1] == '1':
-                            returnString += DBResult[i][2]
-    			            returnString += ' Available\n'
-                        elif DBList[i][1] == '0':
-    			            returnString += DBResult[i][2]
-    			            returnString += ' Unavailable\n'
-    		            else:
-    			            returnString += '***'
-    			            returnString += DBResult[i][2]
-    			            returnString += '***\n'
+                    returnString = ''
+                        for i in range(len(DBResult)):
+                            if DBList[i][1] == '1':
+                                returnString += DBResult[i][2]
+                                returnString += ' Available\n'
+                            elif DBList[i][1] == '0':
+                                returnString += DBResult[i][2]
+                                returnString += ' Unavailable\n'
+                            else:
+                                returnString += '***'
+                                returnString += DBResult[i][2]
+                                returnString += '***\n'
                     return wechat.response_text(content=returnString.decode('utf-8'))
                 elif len(li) == 2:
                     text = DBProcess.borrowEquipment(li[1])
