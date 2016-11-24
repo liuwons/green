@@ -30,7 +30,7 @@ class WX(tornado.web.RequestHandler):
             li = content.lower().encode('utf-8').split()
             print(li)
             if li[0] == 'borrow' or li[0] == 'check':
-                if len(li) == 1:
+                if li[0] == 'check':
                     DBResult = []
                     with open('list.csv', 'rb') as csvfile:
                         reader = csv.reader(csvfile, delimiter=' ')
@@ -62,7 +62,7 @@ class WX(tornado.web.RequestHandler):
                             returnString += DBResult[i][2]
                             returnString += '***\n'
                     return wechat.response_text(content=returnString.decode('utf-8'))
-                elif len(li) == 2:
+                elif len(li) == 3:
                     text = DBProcess.borrowEquipment(li[1])
                     if text == 2:
                         return wechat.response_text(content="list.csv error")
@@ -79,7 +79,7 @@ class WX(tornado.web.RequestHandler):
                         return wechat.response_text(content="list.csv error")
                     with open('log.csv', 'ab') as csvfile:
                 		writer = csv.writer(csvfile, delimiter=' ')
-                		writer.writerow([li[3], 'return', li[1], time, ])
+                		writer.writerow([source, li[2], 'return', li[1], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
@@ -95,7 +95,7 @@ class WX(tornado.web.RequestHandler):
                     strList = strList[-15:-1]
 
                 for s in strList:
-                    str += s.join('-')
+                    str += s[1:].join('-')
                     str += '\n'
 
                 return wechat.response_text(content=str)
