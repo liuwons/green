@@ -2,6 +2,7 @@
 import tornado.escape
 import tornado.web
 import csv
+import DBProcess
 
 
 from config import *
@@ -29,14 +30,17 @@ class WX(tornado.web.RequestHandler):
             print(li)
             if li[0] == 'borrow':
                 if len(li) == 1:
-                    return wechat.response_text(content=self.showEquipment())
+                    text = DBProcess.showEquipment()
+                    return wechat.response_text(content=text)
                 elif len(li) == 2:
-                    return wechat.response_text(content=self.borrowEquipment(li[1]))
+                    text = DBProcess.borrowEquipment(li[1])
+                    return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
             if  li[0] == 'return':
                 if len(li) == 2:
-                    return wechat.response_text(content=self.returnEquipment(li[1]))
+                    text = DBProcess.returnEquipment(li[1])
+                    return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
             return wechat.response_text(content="Wrong Command!")
