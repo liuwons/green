@@ -34,7 +34,6 @@ class WX(tornado.web.RequestHandler):
                     with open('list.csv', 'rb') as csvfile:
                         reader = csv.reader(csvfile, delimiter=' ')
                         for row in reader:
-                            print row
                             if row[1] == '0':
                                 DBResult.append(row)
                             elif row[1] == '1':
@@ -66,6 +65,9 @@ class WX(tornado.web.RequestHandler):
                     text = DBProcess.borrowEquipment(li[1])
                     if text == 2:
                         return wechat.response_text(content="list.csv error")
+                    with open('log.csv', 'ab') as csvfile:
+                		writer = csv.writer(csvfile, delimiter=' ')
+                		writer.writerow(source, 'borrow', [li[1], time])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
@@ -74,9 +76,27 @@ class WX(tornado.web.RequestHandler):
                     text = DBProcess.returnEquipment(li[1])
                     if text == 2:
                         return wechat.response_text(content="list.csv error")
+                    with open('log.csv', 'ab') as csvfile:
+                		writer = csv.writer(csvfile, delimiter=' ')
+                		writer.writerow(source, 'return', [li[1], time])
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
+            if li[0] == 'log':
+                strList = []
+                str = ''
+                i = 0
+                with open('log.csv', 'rb') as csvfile:
+            		reader = csv.reader(csvfile, delimiter=' ')
+                    for row in reader:
+                        strList += row
+                strList = strList[-15:-1]
+                for s in strList:
+                    str += s.join('-')
+                    str += '/n'
+
+                return wechat.response_text(content=str)
+
             return wechat.response_text(content="Wrong Command!")
         if isinstance(wechat.message, ImageMessage):
             picurl = wechat.message.picurl                     # PicUrl
@@ -190,7 +210,6 @@ class WX(tornado.web.RequestHandler):
     				DBResult.append(row)
     			else:
     				return 2
-    	print DBResult
     	return DBResult
 
     def changeDB(arg, num):	#Caution!!! arg and num are all String!
