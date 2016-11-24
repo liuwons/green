@@ -28,18 +28,24 @@ class WX(tornado.web.RequestHandler):
                 return wechat.response_none()
             li = content.lower().split()
             print(li)
-            if li[0] == 'borrow':
+            if li[0] == u'borrow':
                 if len(li) == 1:
                     text = DBProcess.showEquipment()
+                    if text == 2:
+                        return wechat.response_text(content="list.csv error")
                     return wechat.response_text(content=text)
                 elif len(li) == 2:
                     text = DBProcess.borrowEquipment(li[1])
+                    if text == 2:
+                        return wechat.response_text(content="list.csv error")
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
-            if  li[0] == 'return':
+            if  li[0] == u'return':
                 if len(li) == 2:
                     text = DBProcess.returnEquipment(li[1])
+                    if text == 2:
+                        return wechat.response_text(content="list.csv error")
                     return wechat.response_text(content=text)
                 else:
                     return wechat.response_text(content="Wrong Command!")
@@ -144,10 +150,8 @@ class WX(tornado.web.RequestHandler):
                 return
 
     def checkDB():
-
-    	DBResult = []
-
-    	with open('list.csv', 'rb') as csvfile:
+        DBResult = []
+        with open('list.csv', 'rb') as csvfile:
     		reader = csv.reader(csvfile, delimiter=' ')
     		for row in reader:
     			if row[1] == '0':
@@ -157,7 +161,7 @@ class WX(tornado.web.RequestHandler):
     			elif row[1] == '*':
     				DBResult.append(row)
     			else:
-    				return 2 #list.csv error,the status flag must be 1, 0 or *
+    				return 2
     	print DBResult
     	return DBResult
 
