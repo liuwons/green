@@ -29,14 +29,14 @@ class WX(tornado.web.RequestHandler):
             print(li)
             if li[0] == 'borrow':
                 if len(li) == 1:
-                    return wechat.response_text(content=showEquipment())
+                    return wechat.response_text(content=self.showEquipment())
                 elif len(li) == 2:
-                    return wechat.response_text(content=borrowEquipment(li[1]))
+                    return wechat.response_text(content=self.borrowEquipment(li[1]))
                 else:
                     return wechat.response_text(content="Wrong Command!")
             if  li[0] == 'return':
                 if len(li) == 2:
-                    return wechat.response_text(content=returnEquipment(li[1]))
+                    return wechat.response_text(content=self.returnEquipment(li[1]))
                 else:
                     return wechat.response_text(content="Wrong Command!")
             return wechat.response_text(content="Wrong Command!")
