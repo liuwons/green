@@ -1,5 +1,9 @@
 # green
 
+Deprecated
+
+**本项目已停止维护**
+
 ## 说明
 
 本仓库是微信公众号 **Ms_haoqi** 的源代码，基于[wechat-python-sdk](https://github.com/wechat-python-sdk/wechat-python-sdk)和[Tornado](https://github.com/tornadoweb/tornado)，使用图灵机器人API回复用户的消息，可以与用户进行中文对话。
