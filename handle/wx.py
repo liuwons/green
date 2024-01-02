@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import tornado.escape
 import tornado.web
+import csv
+import DBProcess
+import datetime
+
 
 from config import *
 from wechat_sdk.messages import *
@@ -23,11 +27,80 @@ class WX(tornado.web.RequestHandler):
             content = wechat.message.content
             if len(content.replace(' ', '')) == 0:
                 return wechat.response_none()
-            reply = auto_reply.reply(content)
-            if reply is not None:
-                return wechat.response_text(content=reply)
-            else:
-                return wechat.response_none()
+            li = content.lower().encode('utf-8').split()
+            print(li)
+            if li[0] == 'borrow' or li[0] == 'check':
+                if li[0] == 'check':
+                    DBResult = []
+                    with open('list.csv', 'rb') as csvfile:
+                        reader = csv.reader(csvfile, delimiter=' ')
+                        for row in reader:
+                            if row[1] == '0':
+                                DBResult.append(row)
+                            elif row[1] == '1':
+                                DBResult.append(row)
+                            elif row[1] == '*':
+                                DBResult.append(row)
+                            else:
+                                return wechat.response_text(content="list.csv error")#list.csv error,the status flag must be 1, 0 or *
+
+
+                    returnString = ''
+                    for i in range(len(DBResult)):
+                        if DBResult[i][1] == '1':
+                            returnString += DBResult[i][2]
+                            returnString += ':'
+                            returnString += DBResult[i][0]
+                            returnString += ' Available\n'
+                        elif DBResult[i][1] == '0':
+                            returnString += DBResult[i][2]
+                            returnString += ':'
+                            returnString += DBResult[i][0]
+                            returnString += ' Unavailable\n'
+                        else:
+                            returnString += '***'
+                            returnString += DBResult[i][2]
+                            returnString += '***\n'
+                    return wechat.response_text(content=returnString.decode('utf-8'))
+                elif len(li) == 3:
+                    text = DBProcess.borrowEquipment(li[1])
+                    if text == 2:
+                        return wechat.response_text(content="list.csv error")
+                    with open('log.csv', 'ab') as csvfile:
+                		writer = csv.writer(csvfile, delimiter=' ')
+                		writer.writerow([source, li[2], 'borrow', li[1], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                    return wechat.response_text(content=text)
+                else:
+                    return wechat.response_text(content="Wrong Command!")
+            if  li[0] == 'return':
+                if len(li) == 3:
+                    text = DBProcess.returnEquipment(li[1])
+                    if text == 2:
+                        return wechat.response_text(content="list.csv error")
+                    with open('log.csv', 'ab') as csvfile:
+                		writer = csv.writer(csvfile, delimiter=' ')
+                		writer.writerow([source, li[2], 'return', li[1], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                    return wechat.response_text(content=text)
+                else:
+                    return wechat.response_text(content="Wrong Command!")
+            if li[0] == 'log':
+                strList = []
+                str = ''
+                i = 0
+                with open('log.csv', 'rb') as csvfile:
+                    reader = csv.reader(csvfile, delimiter=' ')
+                    for row in reader:
+                        strList.append(row)
+                if len(strList) > 16:
+                    strList = strList[-15:-1]
+
+                for s in strList:
+                    str += '-'.join(s[1:])
+                    str += '\n'
+
+                return wechat.response_text(content=str)
+
+            return wechat.response_text(content="Wrong Command!")
         if isinstance(wechat.message, ImageMessage):
             picurl = wechat.message.picurl                     # PicUrl
             media_id = wechat.message.media_id                 # MediaId
@@ -126,3 +199,112 @@ class WX(tornado.web.RequestHandler):
                     self.write(result)
             except IOError, e:
                 return
+
+    def checkDB():
+        DBResult = []
+        with open('list.csv', 'rb') as csvfile:
+    		reader = csv.reader(csvfile, delimiter=' ')
+    		for row in reader:
+    			if row[1] == '0':
+    				DBResult.append(row)
+    			elif row[1] == '1':
+    				DBResult.append(row)
+    			elif row[1] == '*':
+    				DBResult.append(row)
+    			else:
+    				return 2
+    	return DBResult
+
+    def changeDB(arg, num):	#Caution!!! arg and num are all String!
+
+    	newCSVList = []
+    	oldCSVList = checkDB()
+    	if oldCSVList == 2:
+    		return 2 #list.csv error,the status flag must be 1, 0 or *
+
+    	for i in range(len(oldCSVList)):
+    		if oldCSVList[i][0] == num:
+    			newRow = oldCSVList[i]
+    			newRow[1] = arg
+    			newCSVList.append(newRow)
+    		else:
+    			newCSVList.append(oldCSVList[i])
+    	#rewrite the list.csv
+    	with open('list.csv', 'wb') as csvfile:
+    		writer = csv.writer(csvfile, delimiter=' ')
+    		writer.writerows(newCSVList)
+
+    	return 0
+
+    def borrowEquipment(num):#Caution!!! num is a string!
+    	DBList = checkDB()
+    	if DBList == 2:
+    		return 2
+
+    	order = 999 #the order of the equipment in the DBList
+
+    	for i in range(len(DBList)):
+    		if DBList[i][0] == num:
+    			order = i
+    			break
+
+    	if order == 999:
+    		return 'The equipment number does not exsist'
+
+    	if DBList[order][1] == '0':
+    		return 'The equipment has been lent out.' #if the equipment has been lent out, return this to show the error
+    	elif DBList[order][1] == '1':
+    		if changeDB('0', num) == 0:
+    			return 'Succeed!' # succeed
+    	else:
+    		return 2 #list.csv error(the status flag must be 1, 0 or *), return 2 to show the error
+
+    def returnEquipment(num):#Caution!!! num is a string!
+    	DBList = checkDB()
+    	if DBList == 2:
+    		return 2 #list.csv error,the status flag must be 1, 0 or *
+
+    	order = 999 #the order of the equipment in the DBList
+
+    	for i in range(len(DBList)):
+    		if DBList[i][0] == num:
+    			order = i
+    			break
+    	if order == 999:
+    		return 'The equipment number does not exsist'
+
+    	if DBList[order][1] == '1':
+    		return 'The equipment hasn\'t been lent out.' #if the equipment has not been lent out, return this to show the error
+    	if DBList[order][1] == '0':
+    		if changeDB('1', num) == 0:
+    			return 'Succeed!' # succeed
+
+    def showEquipment():
+        DBResult = []
+        with open('list.csv', 'rb') as csvfile:
+    		reader = csv.reader(csvfile, delimiter=' ')
+    		for row in reader:
+    			if row[1] == '0':
+    				DBResult.append(row)
+    			elif row[1] == '1':
+    				DBResult.append(row)
+    			elif row[1] == '*':
+    				DBResult.append(row)
+    			else:
+    				DBResult = [2]
+
+    	if DBResult == [2]:
+    		return 2 #list.csv error,the status flag must be 1, 0 or *
+
+    	returnString = ''
+    	for i in range(len(DBResult)):
+    		if DBList[i][1] == '1':
+    			returnString += DBResult[i][2]
+    			returnString += ' Available\n'
+    		elif DBList[i][1] == '0':
+    			returnString += DBResult[i][2]
+    			returnString += ' Unavailable\n'
+    		else:
+    			returnString += '***'
+    			returnString += DBResult[i][2]
+    			returnString += '***\n'
